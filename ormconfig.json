@@ -1,0 +1,12 @@
+{
+    "type": "postgres",
+    "host": "localhost",
+    "port": 5342,
+    "username": "postgres",
+    "password": "ELGIN",
+    "database": "work_db",
+    "synchronize": true,
+    "entities": [
+    "src/entity/**/*.ts"
+    ]
+}
