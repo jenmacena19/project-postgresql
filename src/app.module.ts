@@ -4,6 +4,12 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import {TypeOrmModule} from '@nestjs/typeorm';
 import { CustomersModule } from './customers/customers.module';
 import entities from './typeorm';
+import { ResponseModule } from './responses/response.module';
+import { RequestModule } from './requests/requests.module';
+import { DevicesModule } from './devices/devices.module';
+import { GroupsModule } from './groups/groups.module';
+import { SwHouseModule } from './swhouses/swhouses.module';
+import { AuthorizationModule } from './authorizations/authorization.module';
 
 
 @Module({
@@ -25,6 +31,12 @@ import entities from './typeorm';
     }),
     UsersModule,
     CustomersModule, 
+    ResponseModule,
+    RequestModule,
+    DevicesModule,
+    GroupsModule,
+    SwHouseModule,
+    AuthorizationModule
    ],
   controllers: [],
   providers: [],

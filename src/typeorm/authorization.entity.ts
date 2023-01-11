@@ -1,7 +1,7 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
-export class Users {
+export class Authorization {
   @PrimaryGeneratedColumn({
     type: 'bigint',
     name: 'user_id',
@@ -9,18 +9,8 @@ export class Users {
   id: number;
   
   @Column()
-  username: string;
+  token: string;
 
   @Column()
-  email: string;
-
-  @Column()
-  password: string;
-
-  @Column()
-  name: string;
-
-  @Column()
-  perfil: string;
-  
+  valid: boolean;
 }

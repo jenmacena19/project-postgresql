@@ -1,26 +1,16 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
-export class Users {
+export class SwHouse {
   @PrimaryGeneratedColumn({
     type: 'bigint',
-    name: 'user_id',
+    name: 'id',
   })
   id: number;
   
   @Column()
-  username: string;
-
-  @Column()
-  email: string;
-
-  @Column()
-  password: string;
-
-  @Column()
   name: string;
 
   @Column()
-  perfil: string;
-  
+  email: string;
 }
