@@ -1,19 +1,21 @@
-import { IsString } from "class-validator";
+import { IsString } from 'class-validator';
+import { Group } from 'src/typeorm';
 
 export class CreateCustomerDto {
+  @IsString()
+  so: string;
 
-    @IsString()
-    so: string;
+  online: boolean;
 
-    online: boolean;
+  geolocalization: string;
 
-    geolocalization: string;
+  connectionsType: string;
 
-    connectionsType: string;
+  createAtt: string;
 
-    createAtt: string;
+  firmeware: string;
 
-    firmeware: string;
+  adress: string;
 
-    adress: string;
+  group: Group;
 }

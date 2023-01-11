@@ -1,4 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Group } from './group.entity';
+import { Request } from './request.entity';
 
 @Entity()
 export class Users {
@@ -7,7 +9,7 @@ export class Users {
     name: 'user_id',
   })
   id: number;
-  
+
   @Column()
   username: string;
 
@@ -22,5 +24,12 @@ export class Users {
 
   @Column()
   perfil: string;
-  
+
+  @OneToMany(() => Group, (group) => group.user, { eager: true })
+  group: Group[];
+
+  @OneToMany(() => Request, (request) => request.user, {
+    eager: true,
+  })
+  request: Request[];
 }

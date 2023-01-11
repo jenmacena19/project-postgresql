@@ -1,9 +1,11 @@
-import { IsString } from "class-validator";
+import { IsString } from 'class-validator';
+import { Group } from 'src/typeorm';
 
 export class CreateSHouseDto {
+  @IsString()
+  name: string;
 
-    @IsString()
-    name: string;
+  email: string;
 
-    email: string;
+  group: Group;
 }

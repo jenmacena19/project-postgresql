@@ -1,23 +1,37 @@
-import { Users } from "./user.entity";
-import { Column, Entity, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-import { AgenteLocal } from "./agentelocal.entity";
-import { SwHouse } from "./SwHouse.entity";
+import { Users } from './user.entity';
+import {
+  Column,
+  Entity,
+  JoinTable,
+  JoinColumn,
+  OneToMany,
+  ManyToMany,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { AgenteLocal } from './agentelocal.entity';
+import { SwHouse } from './SwHouse.entity';
 
 @Entity()
-export class Group{
-    @PrimaryGeneratedColumn({
-        type: 'bigint',
-        name: 'customer_id',
-      })
-      id: number;
+export class Group {
+  @PrimaryGeneratedColumn({
+    type: 'bigint',
+    name: 'customer_id',
+  })
+  id: number;
 
-    @Column()
-    alias: string;
+  @Column()
+  alias: string;
 
-    @ManyToOne(type => Users, id_users => id_users.id) id_users: Users; 
+  @OneToMany(() => AgenteLocal, (agenteLocal) => agenteLocal.group, {
+    eager: true,
+  })
+  agenteLocais: AgenteLocal[];
 
-    @ManyToOne(type => AgenteLocal, id_agentelocal => id_agentelocal.id) id_agentelocal: AgenteLocal; 
+  @ManyToOne(() => Users, (user) => user.group)
+  @JoinColumn({ name: 'user' })
+  user: Users;
 
-    @ManyToMany(type => SwHouse, id_swhouse => id_swhouse.id) id_swhouse: SwHouse; 
- 
+  @OneToMany(() => SwHouse, (id_swhouse) => id_swhouse.group, { eager: true })
+  swHouses: SwHouse[];
 }

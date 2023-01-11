@@ -1,4 +1,11 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  ManyToOne,
+  JoinColumn,
+  Entity,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { SwHouse } from './SwHouse.entity';
 
 @Entity()
 export class Authorization {
@@ -7,10 +14,14 @@ export class Authorization {
     name: 'user_id',
   })
   id: number;
-  
+
   @Column()
   token: string;
 
   @Column()
   valid: boolean;
+
+  @ManyToOne(() => SwHouse, (swHouses) => swHouses.authorization)
+  @JoinColumn({ name: 'swHouse' })
+  swHouse: SwHouse;
 }

@@ -24,7 +24,7 @@ export class DevicesService {
     return this.deviceRepository.findOne({ where: { id } });
   }
 
-  delete(id: number){
+  delete(id: number) {
     return this.deviceRepository.delete(id);
   }
 }

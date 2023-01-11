@@ -1,4 +1,12 @@
-import { Column, CreateDateColumn, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  OneToOne,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { AgenteLocal } from './agentelocal.entity';
 
 @Entity()
@@ -20,7 +28,7 @@ export class ResponseTime {
   @Column()
   time: number;
 
-  @OneToOne(type => AgenteLocal, id_agentelocal => id_agentelocal) id_agentelocal: AgenteLocal; 
-
-  
+  @ManyToOne(() => AgenteLocal, (agentelocal) => agentelocal.responseTimes)
+  @JoinColumn({ name: 'agentelocal' })
+  agentelocal: AgenteLocal;
 }

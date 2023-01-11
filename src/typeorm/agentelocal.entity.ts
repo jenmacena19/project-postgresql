@@ -1,4 +1,17 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, Timestamp } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  OneToMany,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  Timestamp,
+} from 'typeorm';
+import { Device } from './device.entity';
+import { Group } from './group.entity';
+import { Request } from './request.entity';
+import { ResponseTime } from './responsetime.entity';
 
 @Entity()
 export class AgenteLocal {
@@ -16,13 +29,13 @@ export class AgenteLocal {
 
   @Column()
   geolocalization: string;
-  
-  @Column('json', { nullable: false, default: {} })
+
+  @Column('json', { nullable: true, default: {} })
   connectionsType: string;
 
   @CreateDateColumn({
     type: 'timestamptz',
-    nullable: false,
+    nullable: true,
     default: '',
     name: 'createAt',
   })
@@ -30,23 +43,39 @@ export class AgenteLocal {
 
   @CreateDateColumn({
     type: 'timestamptz',
-    nullable: false,
+    nullable: true,
     default: '',
     name: 'updateAt',
   })
   updateTime: string;
 
+  @ManyToOne(() => Group, (group) => group.agenteLocais)
+  @JoinColumn({ name: 'group' })
+  group: Group;
+
+  @OneToMany(() => Device, (device) => device.agentelocal, { eager: true })
+  devices: Device[];
+
+  @OneToMany(() => ResponseTime, (responseTime) => responseTime.agentelocal, {
+    eager: true,
+  })
+  responseTimes: ResponseTime[];
+
+  @OneToMany(() => Request, (request) => request.agentelocal, {
+    eager: true,
+  })
+  request: Request[];
+
   @Column({
-    nullable: false,
+    nullable: true,
     default: '',
     name: 'firmewares',
   })
   firmeware: string;
 
   @Column({
-    nullable: false,
-    default: ''
+    nullable: true,
+    default: '',
   })
   adress: string;
-
 }

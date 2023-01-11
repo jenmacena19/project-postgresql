@@ -1,9 +1,11 @@
-import { IsString } from "class-validator";
+import { IsString } from 'class-validator';
+import { SwHouse } from 'src/typeorm';
 
 export class CreateAuthorizationDto {
+  @IsString()
+  token: string;
 
-    @IsString()
-    token: string;
+  valid: boolean;
 
-    valid: boolean;
+  swHouse: SwHouse;
 }

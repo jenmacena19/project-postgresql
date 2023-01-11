@@ -1,11 +1,15 @@
-import { IsString } from "class-validator";
+import { IsString } from 'class-validator';
+import { AgenteLocal, Users } from 'src/typeorm';
 
 export class CreateRequestDto {
+  @IsString()
+  requestType: string;
 
-    @IsString()
-    requestType: string;
+  createAtt: string;
 
-    createAtt: string;
+  params: string;
 
-    params: string;
+  agentelocal: AgenteLocal;
+
+  user: Users;
 }

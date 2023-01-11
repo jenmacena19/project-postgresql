@@ -1,4 +1,10 @@
-import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { AgenteLocal } from './agentelocal.entity';
 
 @Entity()
@@ -8,12 +14,14 @@ export class Device {
     name: 'user_id',
   })
   id: number;
-  
+
   @Column({
     nullable: false,
     default: '',
   })
   model: string;
 
-  @ManyToMany(type => AgenteLocal, id_agentelocal => id_agentelocal) id_agentelocal: AgenteLocal; 
+  @ManyToOne(() => AgenteLocal, (agentelocal) => agentelocal.devices)
+  @JoinColumn({ name: 'AgenteLocal' })
+  agentelocal: AgenteLocal;
 }
