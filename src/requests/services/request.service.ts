@@ -1,26 +1,27 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { AgenteLocal } from 'src/typeorm';
 import { Repository } from 'typeorm';
 import { CreateCustomerDto } from 'src/customers/dtos/CreateCustomer.dto';
+import { Request } from 'src/typeorm';
+import { CreateRequestDto } from '../dtos/CreateRequest.dto';
 
 @Injectable()
-export class CustomersService {
+export class RequestService {
   constructor(
-    @InjectRepository(AgenteLocal)
-    private readonly customerRepository: Repository<AgenteLocal>,
+    @InjectRepository(Request)
+    private readonly customerRepository: Repository<Request>,
   ) {}
 
-  createCustomers(createCustomerDto: CreateCustomerDto) {
-    const newUser = this.customerRepository.create(createCustomerDto as any);
+  createRequest(createRequestDto: CreateRequestDto) {
+    const newUser = this.customerRepository.create(createRequestDto as any);
     return this.customerRepository.save(newUser);
   }
 
-  getCustomers() {
+  getRequest() {
     return this.customerRepository.find();
   }
 
-  findCustomersById(id: number) {
+  findRequestById(id: number) {
     return this.customerRepository.findOne({ where: { id } });
   }
 

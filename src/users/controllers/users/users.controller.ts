@@ -1,7 +1,9 @@
 import {
     Body,
     Controller,
+    Delete,
     Get,
+    NotFoundException,
     Param,
     ParseIntPipe,
     Post,
@@ -29,5 +31,18 @@ export class UsersController {
     @UsePipes(ValidationPipe)
     createUsers(@Body() createUserDto: CreateUserDto) {
         return this.userService.createUser(createUserDto);
+    }
+
+    @Delete(':id')
+    public async delete(@Param('id', ParseIntPipe) id: number): Promise<string> {
+        const person = await this.userService.findUsersById(id);
+
+        if (!person) {
+            throw new NotFoundException(`Não achei uma pessoa com o id ${id}`);
+        }
+
+        await this.userService.delete(id);
+
+        return `O usuário com id ${id} foi deletada com sucesso`;
     }
 }
