@@ -44,7 +44,7 @@ export class CustomersController {
     if (!person) {
       throw new NotFoundException(`Não achei um agente local com o id ${id}`);
     }
-    await this.customerService.update({ id }, body);
+    await this.customerService.update(id, body);
     return this.customerService.findCustomersById(id);
   }
   

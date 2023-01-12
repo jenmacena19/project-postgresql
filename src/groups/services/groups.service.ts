@@ -24,6 +24,16 @@ export class GroupsService {
     return this.groupRepository.findOne({ where: { id } });
   }
 
+  async update(id, body) {
+    const person =  this.groupRepository.findOne({ where: { id } });
+    const common_1 = require("@nestjs/common");
+    if (!person) {
+        throw new common_1.NotFoundException(`Não encontrado o grupo com o id ${id}`);
+    }
+    await this.groupRepository.update(id, body);
+    return this.groupRepository.findOne({ where: { id } });
+  }
+
   delete(id: number){
     return this.groupRepository.delete(id);
   }

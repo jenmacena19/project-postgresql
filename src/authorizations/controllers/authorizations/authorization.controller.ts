@@ -13,6 +13,7 @@ import {
 } from '@nestjs/common';
 import { CreateAuthorizationDto } from 'src/authorizations/dtos/CreateAuthorization.dto';
 import { AuthorizationService } from 'src/authorizations/services/authorization.service';
+import { Authorization } from 'src/typeorm';
 
 @Controller('authorization')
 export class AuthoriController {
@@ -31,6 +32,19 @@ export class AuthoriController {
   @UsePipes(ValidationPipe)
   createCustomers(@Body() createAuthDto: CreateAuthorizationDto) {
     return this.authService.createAuthorization(createAuthDto);
+  }
+
+  @Put(':id')
+  public async update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() body: CreateAuthorizationDto,
+  ): Promise<Authorization> {
+    const person = await this.authService.findAuthorizationById(id);
+    if (!person) {
+      throw new NotFoundException(`Não achei uma autorização com o id ${id}`);
+    }
+    await this.authService.update(id, body);
+    return this.authService.findAuthorizationById(id);
   }
 
   @Delete(':id')

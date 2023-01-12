@@ -13,6 +13,7 @@ import {
   } from '@nestjs/common';
 import { CreateSHouseDto } from 'src/swhouses/dtos/CreateSHouse.dto';
 import { SwhouseService } from 'src/swhouses/services/softhous.service';
+import { SwHouse } from 'src/typeorm';
   
   @Controller('swhouse')
   export class SwHouseController {
@@ -31,6 +32,19 @@ import { SwhouseService } from 'src/swhouses/services/softhous.service';
     @UsePipes(ValidationPipe)
     createCustomers(@Body() createSHouseDto: CreateSHouseDto) {
       return this.sofhouseService.createSofHouse(createSHouseDto);
+    }
+
+    @Put(':id')
+    public async update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() body: CreateSHouseDto,
+    ): Promise<SwHouse> {
+    const person = await this.sofhouseService.findSofHouseById(id);
+    if (!person) {
+      throw new NotFoundException(`Não achei a software house com o id ${id}`);
+    }
+    await this.sofhouseService.update(id, body);
+    return this.sofhouseService.findSofHouseById(id);
     }
   
     @Delete(':id')

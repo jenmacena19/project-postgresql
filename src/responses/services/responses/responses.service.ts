@@ -24,6 +24,16 @@ export class ResponseService {
     return this.responseRepository.findOne({ where: { id } });
   }
 
+  async update(id, body) {
+    const person =  this.responseRepository.findOne({ where: { id } });
+    const common_1 = require("@nestjs/common");
+    if (!person) {
+        throw new common_1.NotFoundException(`Não encontrado a requisição com o id ${id}`);
+    }
+    await this.responseRepository.update(id, body);
+    return this.responseRepository.findOne({ where: { id } });
+  }
+
   delete(id: number){
     return this.responseRepository.delete(id);
   }

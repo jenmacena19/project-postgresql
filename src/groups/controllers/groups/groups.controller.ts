@@ -13,6 +13,7 @@ import {
   } from '@nestjs/common';
 import { CreateGroupDto } from 'src/groups/dtos/CreateGroup.dto';
 import { GroupsService } from 'src/groups/services/groups.service';
+import { Group } from 'src/typeorm';
   
   @Controller('groups')
   export class GroupsController {
@@ -32,13 +33,26 @@ import { GroupsService } from 'src/groups/services/groups.service';
     createCustomers(@Body() createGroupDto: CreateGroupDto) {
       return this.groupService.createGroups(createGroupDto);
     }
+
+    @Put(':id')
+    public async update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() body: CreateGroupDto,
+  ): Promise<Group> {
+    const person = await this.groupService.findGroupById(id);
+    if (!person) {
+      throw new NotFoundException(`Não achei um grupo com o id ${id}`);
+    }
+    await this.groupService.update(id, body);
+    return this.groupService.findGroupById(id);
+  }
   
     @Delete(':id')
     public async delete(@Param('id', ParseIntPipe) id: number): Promise<string> {
       const person = await this.groupService.findGroupById(id);
   
       if (!person) {
-        throw new NotFoundException(`Não achei uma pessoa com o id ${id}`);
+        throw new NotFoundException(`Não achei um grupo com o id ${id}`);
       }
   
       await this.groupService.delete(id);

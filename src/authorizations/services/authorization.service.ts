@@ -24,6 +24,16 @@ export class AuthorizationService {
     return this.authRepository.findOne({ where: { id } });
   }
 
+  async update(id, body) {
+    const person =  this.authRepository.findOne({ where: { id } });
+    const common_1 = require("@nestjs/common");
+    if (!person) {
+        throw new common_1.NotFoundException(`Não encontrada autorização com o id ${id}`);
+    }
+    await this.authRepository.update(id, body);
+    return this.authRepository.findOne({ where: { id } });
+  }
+
   delete(id: number){
     return this.authRepository.delete(id);
   }

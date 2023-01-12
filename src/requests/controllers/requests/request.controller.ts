@@ -13,6 +13,7 @@ import {
 } from '@nestjs/common';
 import { CreateRequestDto } from 'src/requests/dtos/CreateRequest.dto';
 import { RequestService } from 'src/requests/services/request.service';
+import { Request } from 'src/typeorm';
 
 @Controller('request')
 export class RequestController {
@@ -31,6 +32,19 @@ export class RequestController {
   @UsePipes(ValidationPipe)
   createCustomers(@Body() createRequestDto: CreateRequestDto) {
     return this.requestService.createRequest(createRequestDto);
+  }
+
+  @Put(':id')
+    public async update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() body: CreateRequestDto,
+    ): Promise<Request> {
+    const person = await this.requestService.findRequestById(id);
+    if (!person) {
+      throw new NotFoundException(`Não achei uma requisição com o id ${id}`);
+    }
+    await this.requestService.update(id, body);
+    return this.requestService.findRequestById(id);
   }
 
   @Delete(':id')

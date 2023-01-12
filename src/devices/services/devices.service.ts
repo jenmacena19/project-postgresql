@@ -24,6 +24,16 @@ export class DevicesService {
     return this.deviceRepository.findOne({ where: { id } });
   }
 
+  async update(id, body) {
+    const person =  this.deviceRepository.findOne({ where: { id } });
+    const common_1 = require("@nestjs/common");
+    if (!person) {
+        throw new common_1.NotFoundException(`Não encontrado o dispositivo com o id ${id}`);
+    }
+    await this.deviceRepository.update(id, body);
+    return this.deviceRepository.findOne({ where: { id } });
+  }
+
   delete(id: number) {
     return this.deviceRepository.delete(id);
   }

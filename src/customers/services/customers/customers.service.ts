@@ -31,7 +31,7 @@ export class CustomersService {
     if (!person) {
         throw new common_1.NotFoundException(`Não encontrado o agente local com o id ${id}`);
     }
-    await this.customerRepository.update({ id }, body);
+    await this.customerRepository.update(id, body);
     return this.customerRepository.findOne({ where: { id } });
   }
 
